@@ -1,0 +1,42 @@
+{
+  "tested_at_utc": "2026-10-06T18:09:33.107Z",
+  "kind": "Protocol unit tests with mock channel; NOT actual WebRTC or browser verification",
+  "results": [
+    {
+      "test": "cannot_offer_before_bilateral_trust",
+      "status": "passed"
+    },
+    {
+      "test": "bilateral_trust_required",
+      "status": "passed"
+    },
+    {
+      "test": "offer_has_no_file_bytes_before_accept",
+      "status": "passed"
+    },
+    {
+      "test": "accept_sends_chunks_ack_completes",
+      "status": "passed"
+    },
+    {
+      "test": "receiver_consent_and_exact_reassembly",
+      "status": "passed"
+    },
+    {
+      "test": "checksum_mismatch_never_exposes_download",
+      "status": "passed"
+    },
+    {
+      "test": "oversize_metadata_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "reject_discards_transfer",
+      "status": "passed"
+    },
+    {
+      "test": "cancel_discards_outgoing",
+      "status": "passed"
+    }
+  ]
+}

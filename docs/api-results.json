@@ -1,0 +1,46 @@
+{
+  "tested_at_utc": "2026-10-06T18:04:49Z",
+  "kind": "Real local production Worker + D1 API tests; no browser and no file payload",
+  "results": [
+    {
+      "test": "create_room",
+      "status": "passed"
+    },
+    {
+      "test": "unauthorized_poll_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "join_once",
+      "status": "passed"
+    },
+    {
+      "test": "second_join_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "guest_answer",
+      "status": "passed"
+    },
+    {
+      "test": "host_receives_answer",
+      "status": "passed"
+    },
+    {
+      "test": "guest_cannot_approve_as_host",
+      "status": "passed"
+    },
+    {
+      "test": "host_revokes_room",
+      "status": "passed"
+    },
+    {
+      "test": "revoked_room_inaccessible",
+      "status": "passed"
+    },
+    {
+      "test": "oversized_signalling_rejected",
+      "status": "passed"
+    }
+  ]
+}

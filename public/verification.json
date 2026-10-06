@@ -1,0 +1,103 @@
+{
+  "status": "prototype_deployed_e2e_unverified",
+  "passed": [
+    {
+      "tested_at_utc": "2026-10-06T18:04:29.453Z",
+      "kind": "Protocol unit tests with mock channel; NOT actual WebRTC or browser verification",
+      "results": [
+        {
+          "test": "cannot_offer_before_bilateral_trust",
+          "status": "passed"
+        },
+        {
+          "test": "bilateral_trust_required",
+          "status": "passed"
+        },
+        {
+          "test": "offer_has_no_file_bytes_before_accept",
+          "status": "passed"
+        },
+        {
+          "test": "accept_sends_chunks_ack_completes",
+          "status": "passed"
+        },
+        {
+          "test": "receiver_consent_and_exact_reassembly",
+          "status": "passed"
+        },
+        {
+          "test": "checksum_mismatch_never_exposes_download",
+          "status": "passed"
+        },
+        {
+          "test": "oversize_metadata_rejected",
+          "status": "passed"
+        },
+        {
+          "test": "reject_discards_transfer",
+          "status": "passed"
+        },
+        {
+          "test": "cancel_discards_outgoing",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "tested_at_utc": "2026-10-06T18:04:49Z",
+      "kind": "Real local production Worker + D1 API tests; no browser and no file payload",
+      "results": [
+        {
+          "test": "create_room",
+          "status": "passed"
+        },
+        {
+          "test": "unauthorized_poll_rejected",
+          "status": "passed"
+        },
+        {
+          "test": "join_once",
+          "status": "passed"
+        },
+        {
+          "test": "second_join_rejected",
+          "status": "passed"
+        },
+        {
+          "test": "guest_answer",
+          "status": "passed"
+        },
+        {
+          "test": "host_receives_answer",
+          "status": "passed"
+        },
+        {
+          "test": "guest_cannot_approve_as_host",
+          "status": "passed"
+        },
+        {
+          "test": "host_revokes_room",
+          "status": "passed"
+        },
+        {
+          "test": "revoked_room_inaccessible",
+          "status": "passed"
+        },
+        {
+          "test": "oversized_signalling_rejected",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "build": "TypeScript and production build passed; lint has zero errors and one QR image advisory",
+  "browser_e2e": "Local Chromium blocked by socket permissions. Supported cloud browser reached private Site login screen; no sign-in authorization was provided. Real WebRTC byte transfer remains unverified.",
+  "not_tested": [
+    "Physical iPad Safari",
+    "Separate physical devices",
+    "Cross-network transfer",
+    "Lock screen/background",
+    "Native/hybrid implementations"
+  ],
+  "deployment": "Private Site successfully deployed 2026-10-06; hosted runtime API behavior not end-to-end tested."
+}
