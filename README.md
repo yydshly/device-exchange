@@ -1,6 +1,6 @@
 # 随手传 · Device Bridge Lab
 
-私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。网站与此仓库均保持私有；访问网站需要项目所有者登录。源发布版本：`9d2b709fbbc5084cb6a6c1079e79dcce9e6233ae`。
+私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。此源码仓库已按作者授权公开；演示网站仍需要项目所有者登录。源发布版本：`9d2b709fbbc5084cb6a6c1079e79dcce9e6233ae`。
 
 A private, foreground-only iPad↔computer transfer feasibility prototype, plus transparent presentation/transport alternatives. Version 0.1 is **not** a claim of arbitrary-network or iPad-device validation.
 
