@@ -31,3 +31,6 @@ On the iPad and computer, open the private Site with the owner account, create a
 
 ## 2026-10-07 protocol repair
 Five race conditions were reproduced and repaired. Seven added regression tests pass in addition to the original nine protocol tests. Before/after evidence is checked in. Type checking passes; lint has zero errors and the existing QR-image performance advisory. No mocked-channel result is claimed as real RTC transfer. The authorized login reached a correct-account basic-profile consent panel; that separate consent is pending.
+
+## 2026-10-07 04:52 UTC: controlled real RTC pass
+The former browser execution blocker was resolved using a standard GitHub-hosted runner after the source repository became public. Twelve controlled E2E checks passed; four downloaded synthetic payloads match byte-for-byte and by independent SHA-256. See `rtc-e2e-2026-10-07.md` and `e2e-results.json` for evidence and boundaries. This updates the earlier local-browser-blocked status but does not claim hardware or live private Site validation.

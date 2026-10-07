@@ -1,5 +1,5 @@
 {
-  "status": "prototype_deployed_e2e_unverified",
+  "status": "controlled_rtc_e2e_passed_hardware_and_production_unverified",
   "passed": [
     {
       "tested_at_utc": "2026-10-06T18:04:29.453Z",
@@ -91,7 +91,7 @@
     }
   ],
   "build": "TypeScript and production build passed; lint has zero errors and one QR image advisory",
-  "browser_e2e": "2026-10-07: user approved existing-account login; OpenAI recognized the correct account and now requires explicit basic-profile consent. Consent is pending; real RTC byte transfer remains unverified.",
+  "browser_e2e": "Real RTC transfer passed on a standard GitHub Linux runner, two isolated Chromium contexts, with downloaded bytes and independent SHA-256 validation. Live private Site login/profile consent and iPad/separate-device/cross-network/background validation remain pending.",
   "not_tested": [
     "Physical iPad Safari",
     "Separate physical devices",
@@ -132,5 +132,79 @@
         "status": "passed"
       }
     ]
+  },
+  "rtc_e2e": {
+    "status": "passed",
+    "tested_at_utc": "2026-10-07T04:52:11Z",
+    "environment": "Two isolated Chromium contexts in a single standard GitHub Linux runner; real RTCDataChannel + local production Worker/D1; synthetic files; NOT production Site login",
+    "results": [
+      {
+        "test": "pairing_digest_and_bilateral_consent",
+        "status": "passed"
+      },
+      {
+        "test": "byte_exact_transfer_unicode.txt",
+        "status": "passed",
+        "bytes": 54,
+        "sha256": "37b9a31d685ee64b89dc5cf246f8ee302b5e4edcc82e2c5d8c990bf71cdc5aff"
+      },
+      {
+        "test": "byte_exact_transfer_synthetic.png",
+        "status": "passed",
+        "bytes": 68,
+        "sha256": "1dfe70cbb79e9d315db769417207a36f4d0066aa706ed506b6fed81e8d729646"
+      },
+      {
+        "test": "byte_exact_transfer_binary-2m.bin",
+        "status": "passed",
+        "bytes": 2097152,
+        "sha256": "91d3beb88a9b2f778a6c44a1c53b63d3c79931845a9aef84b3fb414610bd1938"
+      },
+      {
+        "test": "byte_exact_transfer_empty.txt",
+        "status": "passed",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "test": "receiver_rejection_no_receipt",
+        "status": "passed"
+      },
+      {
+        "test": "sender_cancellation_clears_offer",
+        "status": "passed"
+      },
+      {
+        "test": "over_limit_rejected_before_transfer",
+        "status": "passed"
+      },
+      {
+        "test": "single_use_invitation",
+        "status": "passed"
+      },
+      {
+        "test": "close_revokes_room_and_peer",
+        "status": "passed"
+      },
+      {
+        "test": "mobile_layout_and_honest_alternatives",
+        "status": "passed"
+      },
+      {
+        "test": "no_browser_runtime_errors",
+        "status": "passed"
+      }
+    ],
+    "not_tested": [
+      "Physical iPad Safari",
+      "Separate physical devices",
+      "Different Wi-Fi or cellular networks",
+      "Lock screen or background transfer",
+      "TURN/relay",
+      "Production end-to-end pairing",
+      "Native/hybrid implementations"
+    ],
+    "run_url": "https://github.com/yydshly/device-exchange/actions/runs/37573416192",
+    "tested_source_commit": "28c2b4c33d416c743cf1c3f86e159222ad098f13"
   }
 }

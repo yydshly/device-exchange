@@ -1,6 +1,6 @@
 # 随手传 · Device Bridge Lab
 
-私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。此源码仓库已按作者授权公开；演示网站仍需要项目所有者登录。源发布版本：`9d2b709fbbc5084cb6a6c1079e79dcce9e6233ae`。
+私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。此源码仓库已按作者授权公开；演示网站仍需要项目所有者登录。源发布版本：`c0e549c28f1ae2e8b12000201daacc3203b8dff5`。
 
 A private, foreground-only iPad↔computer transfer feasibility prototype, plus transparent presentation/transport alternatives. Version 0.1 is **not** a claim of arbitrary-network or iPad-device validation.
 
@@ -37,3 +37,7 @@ Run actual iPad Safari + computer tests on the user's chosen network before call
 ## 2026-10-07 protocol reliability update
 
 Five reproduced protocol races were repaired. Run `node tests/protocol.mjs` and `node tests/protocol-races.mjs` for the nine original plus seven added deterministic checks. These use mocked channels and do not establish real WebRTC or iPad transfer success. See the checked-in before/after regression records.
+
+## 2026-10-07 实际 RTC 验证
+
+[受控双 Chromium 实传记录](docs/rtc-e2e-2026-10-07.md)：12项检查通过，4份合成文件下载字节与SHA256匹配。实测提交`28c2b4c33d416c743cf1c3f86e159222ad098f13`，Actions运行`37573416192`。这是同一托管机器上本地服务的双浏览器上下文验证，不代表iPad、跨网络或生产登录验收。
