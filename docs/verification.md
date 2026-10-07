@@ -28,3 +28,6 @@ Private Site successfully deployed at https://device-bridge-lab.yydshly.chatgpt.
 
 ## Minimal hardware acceptance check
 On the iPad and computer, open the private Site with the owner account, create an invitation on one and scan/join on the other, compare the displayed code, confirm on both, send a synthetic text or image, consent on the receiving device, save and compare SHA-256. Repeat in reverse, reject a file and cancel a pending transfer. Keep both pages in the foreground. This has not yet been performed.
+
+## 2026-10-07 protocol repair
+Five race conditions were reproduced and repaired. Seven added regression tests pass in addition to the original nine protocol tests. Before/after evidence is checked in. Type checking passes; lint has zero errors and the existing QR-image performance advisory. No mocked-channel result is claimed as real RTC transfer. The authorized login reached a correct-account basic-profile consent panel; that separate consent is pending.

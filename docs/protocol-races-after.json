@@ -1,0 +1,33 @@
+{
+  "kind": "Deterministic protocol race regressions; mocked channel, not RTC transport",
+  "results": [
+    {
+      "name": "cancel_while_reading_does_not_send_offer",
+      "status": "passed"
+    },
+    {
+      "name": "concurrent_offer_is_reserved_before_read",
+      "status": "passed"
+    },
+    {
+      "name": "duplicate_accept_does_not_send_bytes_twice",
+      "status": "passed"
+    },
+    {
+      "name": "ack_before_send_cannot_claim_success",
+      "status": "passed"
+    },
+    {
+      "name": "channel_failure_during_read_does_not_send_offer",
+      "status": "passed"
+    },
+    {
+      "name": "receiver_double_accept_emits_one_accept",
+      "status": "passed"
+    },
+    {
+      "name": "duplicate_end_emits_one_verified_ack",
+      "status": "passed"
+    }
+  ]
+}

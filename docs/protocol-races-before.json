@@ -1,0 +1,30 @@
+{
+  "kind": "Deterministic protocol race regressions; mocked channel, not RTC transport",
+  "results": [
+    {
+      "name": "cancel_while_reading_does_not_send_offer",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n1 !== 0\n"
+    },
+    {
+      "name": "concurrent_offer_is_reserved_before_read",
+      "status": "failed",
+      "error": "Missing expected rejection."
+    },
+    {
+      "name": "duplicate_accept_does_not_send_bytes_twice",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n2 !== 1\n"
+    },
+    {
+      "name": "ack_before_send_cannot_claim_success",
+      "status": "failed",
+      "error": "Expected \"actual\" to be strictly unequal to: null"
+    },
+    {
+      "name": "channel_failure_during_read_does_not_send_offer",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n1 !== 0\n"
+    }
+  ]
+}

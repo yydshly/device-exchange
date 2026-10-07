@@ -1,6 +1,6 @@
 # 随手传 · Device Bridge Lab
 
-私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。网站与此仓库均保持私有；访问网站需要项目所有者登录。源发布版本：`16b0cd27085e92f9f0dcc7d2f59339f9a7fc5b58`。
+私有演示：[随手传](https://device-bridge-lab.yydshly.chatgpt.site)。网站与此仓库均保持私有；访问网站需要项目所有者登录。源发布版本：`9d2b709fbbc5084cb6a6c1079e79dcce9e6233ae`。
 
 A private, foreground-only iPad↔computer transfer feasibility prototype, plus transparent presentation/transport alternatives. Version 0.1 is **not** a claim of arbitrary-network or iPad-device validation.
 
@@ -33,3 +33,7 @@ Private Site access requires the owner to be signed in on both devices; a QR cod
 ## Roadmap gating
 
 Run actual iPad Safari + computer tests on the user's chosen network before calling the product suitable for daily use. Compare encrypted HTTPS relay if cross-network success is insufficient; compare native/hybrid only if background, system share, or capability execution is important enough to justify installation. Native/hybrid and relay are proposals, not shipped features.
+
+## 2026-10-07 protocol reliability update
+
+Five reproduced protocol races were repaired. Run `node tests/protocol.mjs` and `node tests/protocol-races.mjs` for the nine original plus seven added deterministic checks. These use mocked channels and do not establish real WebRTC or iPad transfer success. See the checked-in before/after regression records.

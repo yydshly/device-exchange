@@ -91,7 +91,7 @@
     }
   ],
   "build": "TypeScript and production build passed; lint has zero errors and one QR image advisory",
-  "browser_e2e": "Local Chromium blocked by socket permissions. Supported cloud browser reached private Site login screen; no sign-in authorization was provided. Real WebRTC byte transfer remains unverified.",
+  "browser_e2e": "2026-10-07: user approved existing-account login; OpenAI recognized the correct account and now requires explicit basic-profile consent. Consent is pending; real RTC byte transfer remains unverified.",
   "not_tested": [
     "Physical iPad Safari",
     "Separate physical devices",
@@ -99,5 +99,38 @@
     "Lock screen/background",
     "Native/hybrid implementations"
   ],
-  "deployment": "Private Site successfully deployed 2026-10-06; hosted runtime API behavior not end-to-end tested."
+  "deployment": "Private Site successfully deployed 2026-10-06; hosted runtime API behavior not end-to-end tested.",
+  "protocol_race_regressions": {
+    "kind": "Deterministic protocol race regressions; mocked channel, not RTC transport",
+    "results": [
+      {
+        "name": "cancel_while_reading_does_not_send_offer",
+        "status": "passed"
+      },
+      {
+        "name": "concurrent_offer_is_reserved_before_read",
+        "status": "passed"
+      },
+      {
+        "name": "duplicate_accept_does_not_send_bytes_twice",
+        "status": "passed"
+      },
+      {
+        "name": "ack_before_send_cannot_claim_success",
+        "status": "passed"
+      },
+      {
+        "name": "channel_failure_during_read_does_not_send_offer",
+        "status": "passed"
+      },
+      {
+        "name": "receiver_double_accept_emits_one_accept",
+        "status": "passed"
+      },
+      {
+        "name": "duplicate_end_emits_one_verified_ack",
+        "status": "passed"
+      }
+    ]
+  }
 }
