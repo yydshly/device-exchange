@@ -28,6 +28,14 @@
     {
       "test": "duplicate_payload_offset_cannot_duplicate_content",
       "status": "passed"
+    },
+    {
+      "test": "cancel_during_checksum_never_releases_receipt",
+      "status": "passed"
+    },
+    {
+      "test": "frame_payload_boundaries_0_1_16383_16384_16385_25MiB",
+      "status": "passed"
     }
   ]
 }
