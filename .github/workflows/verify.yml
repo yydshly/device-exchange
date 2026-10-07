@@ -17,4 +17,5 @@ jobs:
       - run: npm run lint
       - run: node tests/protocol.mjs
       - run: node tests/protocol-races.mjs
+      - run: node tests/protocol-cancel.mjs
       - run: npm run build

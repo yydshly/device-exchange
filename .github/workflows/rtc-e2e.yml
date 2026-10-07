@@ -16,6 +16,8 @@ jobs:
       CLOUDFLARE_CF_FETCH_ENABLED: 'false'
     steps:
       - uses: actions/checkout@v4
+      - name: Clear prior generated verification reports
+        run: rm -f docs/e2e-results.json docs/reliability-results.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -45,11 +47,17 @@ jobs:
             sleep 1
           done
           if [ "$ready" -ne 1 ]; then tail -80 /tmp/device-rtc-server.log; exit 1; fi
-          timeout 300s python tests/e2e.py
+          timeout 150s python tests/e2e.py
+          timeout 150s python tests/reliability.py
       - name: Record synthetic verification evidence
         if: always()
         shell: bash
         run: |
+          if [ -f docs/reliability-results.json ]; then
+            echo RELIABILITY_REPORT_BEGIN
+            cat docs/reliability-results.json
+            echo RELIABILITY_REPORT_END
+          fi
           if [ -f docs/e2e-results.json ]; then
             echo 'RTC_E2E_REPORT_BEGIN'
             cat docs/e2e-results.json

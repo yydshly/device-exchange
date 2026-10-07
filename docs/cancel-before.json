@@ -1,0 +1,20 @@
+{
+  "kind": "Deterministic cancellation protocol regression; mocked channel, not network test",
+  "results": [
+    {
+      "test": "late_queued_chunk_after_cancel_is_discarded",
+      "status": "failed",
+      "error": "unexpected bytes"
+    },
+    {
+      "test": "cancelled_transfer_bytes_cannot_pollute_retry",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n3 !== 0\n"
+    },
+    {
+      "test": "late_end_after_cancel_is_discarded",
+      "status": "failed",
+      "error": "size mismatch"
+    }
+  ]
+}

@@ -55,7 +55,7 @@ async def main():
   await transfer(b,a,'empty.txt',b'','text/plain')
   # Receiver rejection must not release bytes or a download.
   await a.locator('input[type=file]').set_input_files({'name':'rejected.txt','mimeType':'text/plain','buffer':b'should never arrive'})
-  await b.get_by_role('button',name='拒绝',exact=True).click();await a.locator('.transferstatus').get_by_text('对方取消或拒绝了传输',exact=True).wait_for()
+  await b.get_by_role('button',name='拒绝',exact=True).click();await a.locator('.transferstatus').get_by_text('对方取消或拒绝了传输，可以重新发送',exact=True).wait_for()
   assert await b.locator('.receipt').filter(has_text='rejected.txt').count()==0
   passed('receiver_rejection_no_receipt')
   await a.locator('input[type=file]').set_input_files({'name':'cancelled.txt','mimeType':'text/plain','buffer':b'cancelled'})

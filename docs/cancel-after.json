@@ -1,0 +1,33 @@
+{
+  "kind": "Deterministic cancellation protocol regression; mocked channel, not network test",
+  "results": [
+    {
+      "test": "late_queued_chunk_after_cancel_is_discarded",
+      "status": "passed"
+    },
+    {
+      "test": "cancelled_transfer_bytes_cannot_pollute_retry",
+      "status": "passed"
+    },
+    {
+      "test": "late_end_after_cancel_is_discarded",
+      "status": "passed"
+    },
+    {
+      "test": "wrong_frame_offset_rejected_before_append",
+      "status": "passed"
+    },
+    {
+      "test": "unrelated_transfer_frame_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "unversioned_peer_requires_refresh",
+      "status": "passed"
+    },
+    {
+      "test": "duplicate_payload_offset_cannot_duplicate_content",
+      "status": "passed"
+    }
+  ]
+}

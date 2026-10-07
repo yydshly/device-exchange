@@ -49,3 +49,6 @@ next-env.d.ts
 
 # Local hosting identity; regenerate with scripts/setup-local.mjs
 /.openai/
+
+__pycache__/
+*.pyc

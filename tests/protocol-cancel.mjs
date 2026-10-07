@@ -1,0 +1,16 @@
+import ts from 'typescript';import fs from 'node:fs';import assert from 'node:assert/strict';
+const path=process.env.PROTOCOL_SOURCE||new URL('../lib/transfer.ts',import.meta.url);
+const js=ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+const {Transfer,digest,frameChunk}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+const wrap=(id,n,b)=>frameChunk?frameChunk(id,n,b):b;
+function harness(){const sent=[],done=[];const t=new Transfer({readyState:'open',bufferedAmount:0,send:x=>sent.push(x)},{state:()=>{},offer:()=>{},done:(m,b)=>done.push({m,b}),trust:()=>{}});t.trusted=t.remoteTrusted=true;return {t,sent,done};}
+async function offer(t,bytes){const m={kind:'offer',id:crypto.randomUUID(),name:'synthetic.bin',type:'',size:bytes.byteLength,sha:await digest(bytes)};await t.receive(JSON.stringify(m));t.accept();return m;}
+const results=[];async function test(name,fn){try{await fn();results.push({test:name,status:'passed'});}catch(e){results.push({test:name,status:'failed',error:e.message});}}
+await test('late_queued_chunk_after_cancel_is_discarded',async()=>{const {t}=harness(),b=new Uint8Array([1,2,3]).buffer,m=await offer(t,b);t.cancel();await t.receive(wrap(m.id,0,b));assert.equal(t.incoming,null);assert.equal(t.ready,true);});
+await test('cancelled_transfer_bytes_cannot_pollute_retry',async()=>{const {t,done}=harness(),old=new Uint8Array([1,2,3]).buffer,m=await offer(t,old);t.cancel();const b=new Uint8Array([4,5,6]).buffer,n=await offer(t,b);await t.receive(wrap(m.id,0,old));assert.equal(t.incoming.size,0);await t.receive(wrap(n.id,0,b));await t.receive(JSON.stringify({kind:'end',id:n.id}));assert.equal(done.length,1);assert.deepEqual(new Uint8Array(await done[0].b.arrayBuffer()),new Uint8Array(b));});
+await test('late_end_after_cancel_is_discarded',async()=>{const {t}=harness(),b=new Uint8Array([1]).buffer,m=await offer(t,b);t.cancel();await t.receive(JSON.stringify({kind:'end',id:m.id}));assert.equal(t.ready,true);});
+await test('wrong_frame_offset_rejected_before_append',async()=>{const {t,done}=harness(),b=new Uint8Array([1,2]).buffer,m=await offer(t,b);await assert.rejects(t.receive(wrap(m.id,1,b)),/unexpected/);assert.equal(t.incoming.size,0);assert.equal(done.length,0);});
+await test('unrelated_transfer_frame_rejected',async()=>{const {t}=harness(),b=new Uint8Array([1]).buffer;await offer(t,b);await assert.rejects(t.receive(wrap(crypto.randomUUID(),0,b)),/unexpected/);assert.equal(t.incoming.size,0);});
+await test('unversioned_peer_requires_refresh',async()=>{const {t}=harness();t.remoteTrusted=false;await assert.rejects(t.receive(JSON.stringify({kind:'trust'})),/协议版本/);assert.equal(t.ready,false);});
+await test('duplicate_payload_offset_cannot_duplicate_content',async()=>{const {t}=harness(),b=new Uint8Array([1,2]).buffer,m=await offer(t,b);await t.receive(wrap(m.id,0,b.slice(0,1)));await assert.rejects(t.receive(wrap(m.id,0,b.slice(0,1))),/unexpected/);assert.equal(t.incoming.size,1);});
+console.log(JSON.stringify({kind:'Deterministic cancellation protocol regression; mocked channel, not network test',results},null,2));if(results.some(r=>r.status!=='passed'))process.exitCode=1;
