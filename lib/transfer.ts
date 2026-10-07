@@ -32,7 +32,16 @@ export class Transfer {
   this.channel = channel;
   this.onState = events.state; this.onOffer = events.offer; this.onDone = events.done; this.onTrust = events.trust;
   channel.binaryType = 'arraybuffer';
-  channel.onmessage = e => { void this.receive(e.data).catch(e => this.fail(e instanceof Error && e.message.includes('协议版本') ? e.message : '收到无效数据，已中止，请重新配对')); };
+  channel.onmessage = e => { void this.receive(e.data).catch(e => {
+   const message = e instanceof Error ? e.message : '';
+   const explanation: Record<string, string> = {
+    'checksum mismatch': '文件校验未通过，未提供下载，请重新配对后重传',
+    'ack mismatch': '对方校验回执异常，未确认成功，请重新配对后重传',
+    'size mismatch': '接收大小不完整，未提供下载，请重新配对后重传',
+    'backpressure timeout': '传输长时间未推进，已中止，请重新配对后重传',
+   };
+   this.fail(message.includes('协议版本') ? message : explanation[message] || '收到无效数据，已中止，请重新配对');
+  }); };
   channel.onclose = () => this.fail('连接已断开，请重新配对');
   channel.onerror = () => this.fail('传输连接出错，请重新配对');
  }

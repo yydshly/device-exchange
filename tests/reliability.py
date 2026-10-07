@@ -88,7 +88,7 @@ async def main():
   await a.evaluate('window.__corruptNext=true')
   await a.locator('input[type=file]').set_input_files({'name':'corrupt.bin','mimeType':'application/octet-stream','buffer':b'controlled integrity fixture'})
   await b.get_by_role('button',name='同意接收',exact=True).click()
-  await b.locator('.transferstatus').get_by_text('收到无效数据，已中止',exact=False).wait_for()
+  await b.locator('.transferstatus').get_by_text('文件校验未通过，未提供下载',exact=False).wait_for()
   assert await b.locator('.receipt').filter(has_text='corrupt.bin').count()==0
   assert await b.locator('input[type=file]').is_disabled()
   passed('injected_payload_corruption_has_no_download',simulation='One payload byte changed before native RTC send; no transport security alteration')
