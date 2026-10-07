@@ -82,7 +82,7 @@ export class Transfer {
   this.preparing = null;
   if (this.outgoing) { this.outgoing.cancelled = true; this.send({ kind: 'cancel', id: this.outgoing.meta.id }); this.outgoing = null; }
   if (this.incoming) this.reject();
-  this.onState('已取消传输，可以重新发送');
+  this.onState('本次传输已取消；重发前可先确认对方是否已收到');
  }
  fail(s: string) {
   this.preparing = null; this.trusted = false; this.remoteTrusted = false; this.onTrust();
