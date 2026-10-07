@@ -1,0 +1,64 @@
+name: RTC synthetic end-to-end
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: rtc-synthetic-e2e
+  cancel-in-progress: false
+jobs:
+  rtc:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    env:
+      DEVICE_TEST_URL: http://127.0.0.1:5188
+      WRANGLER_SEND_METRICS: 'false'
+      CLOUDFLARE_CF_FETCH_ENABLED: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install application and official browser dependencies
+        run: |
+          npm ci
+          python -m pip install playwright==1.63.0
+          python -m playwright install --with-deps chromium
+      - name: Build isolated app and prepare local test database
+        run: |
+          node scripts/setup-local.mjs
+          npm run build
+          node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_aromatic_gunslinger.sql
+      - name: Test real RTC bytes in two isolated browser contexts
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm start -- --port 5188 > /tmp/device-rtc-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          ready=0
+          for i in $(seq 1 60); do
+            if curl --noproxy '*' --fail --silent "$DEVICE_TEST_URL" >/dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then tail -80 /tmp/device-rtc-server.log; exit 1; fi
+          timeout 300s python tests/e2e.py
+      - name: Record synthetic verification evidence
+        if: always()
+        shell: bash
+        run: |
+          if [ -f docs/e2e-results.json ]; then
+            echo 'RTC_E2E_REPORT_BEGIN'
+            cat docs/e2e-results.json
+            echo 'RTC_E2E_REPORT_END'
+            printf '## Synthetic RTC evidence\n\nLocal app, two Chromium contexts. Not production login, iPad, separate hardware, cross-network or background validation.\n\n```json\n' >> "$GITHUB_STEP_SUMMARY"
+            cat docs/e2e-results.json >> "$GITHUB_STEP_SUMMARY"
+            printf '\n```\n' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No report produced; inspect setup or timeout. No pass claimed.'
+          fi
+# Standard public-repository runner; no paid addons, secrets, Site auth, public tunnel,
+# artifact uploads or cache uploads. The tested app binds only to loopback.
