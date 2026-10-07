@@ -39,7 +39,9 @@ async def main():
    receipt=receiver.locator('.receipt').filter(has_text=name)
    await receipt.wait_for(timeout=30000)
    expected=hashlib.sha256(content).hexdigest()
-   assert await receipt.locator('code').inner_text()==expected
+   await receipt.locator('summary').click()
+   displayed_sha=await receipt.locator('code').inner_text()
+   assert displayed_sha==expected, {'expected_sha256':expected,'displayed_sha256':displayed_sha}
    async with receiver.expect_download() as d:
     await receipt.get_by_role('link',name='保存文件').click()
    download=await d.value; path=await download.path();actual=Path(path).read_bytes()
